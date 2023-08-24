@@ -1,0 +1,72 @@
+class Match:
+    def __init__(self, location, team_01, team_02, timing):
+        self.location = location
+        self.team_01 = team_01
+        self.team_02 = team_02
+        self.timing = timing
+
+class MatchTable:
+    def __init__(self):
+        self.matches = []
+
+    def add_match(self, match):
+        self.matches.append(match)
+
+    def search_by_team(self, team_name):
+        result = [match for match in self.matches if team_name in (match.team_01, match.team_02)]
+        return result
+
+    def search_by_location(self, location):
+        result = [match for match in self.matches if match.location == location]
+        return result
+
+    def search_by_timing(self, timing):
+        result = [match for match in self.matches if match.timing == timing]
+        return result
+
+def main():
+    match_table = MatchTable()
+
+    # Adding matches to the table
+    match_table.add_match(Match("Mumbai", "India", "Sri Lanka", "DAY"))
+    match_table.add_match(Match("Delhi", "England", "Australia", "DAY-NIGHT"))
+    match_table.add_match(Match("Chennai", "India", "South Africa", "DAY"))
+    match_table.add_match(Match("Indore", "England", "Sri Lanka", "DAY-NIGHT"))
+    match_table.add_match(Match("Mohali", "Australia", "South Africa", "DAY-NIGHT"))
+    match_table.add_match(Match("Delhi", "India", "Australia", "DAY"))
+
+    while True:
+        print("Search options:")
+        print("1. List of all the matches of a Team")
+        print("2. List of Matches on a Location")
+        print("3. List of Matches based on timing")
+        print("4. Quit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            team_name = input("Enter the team name: ")
+            matches = match_table.search_by_team(team_name)
+            print("Matches involving", team_name)
+            for match in matches:
+                print(match.location, match.team_01, "vs", match.team_02, match.timing)
+
+        elif choice == '2':
+            location = input("Enter the location: ")
+            matches = match_table.search_by_location(location)
+            print("Matches at", location)
+            for match in matches:
+                print(match.team_01, "vs", match.team_02, match.timing)
+
+        elif choice == '3':
+            timing = input("Enter the timing: ")
+            matches = match_table.search_by_timing(timing)
+            print("Matches at", timing)
+            for match in matches:
+                print(match.location, match.team_01, "vs", match.team_02)
+
+        elif choice == '4':
+            break
+
+if __name__ == "__main__":
+    main()
